@@ -5,6 +5,7 @@ from rest_framework import mixins, viewsets
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
+from django.http import FileResponse
 
 from src.api.dogs import serializers
 from src.core.models import Bread, Image
@@ -12,7 +13,8 @@ from src.core.models import Bread, Image
 class CustomJSONRenderer(JSONRenderer):
     def render(self, data, accepted_media_type=None, renderer_context=None):
         status_code = renderer_context['response'].status_code
-        response = {"code": status_code, "data": data, "count": len(data) if isinstance(data, list) else 1}
+        renderer_context['response'].status_code = status.HTTP_200_OK
+        response = {"code": status_code, "data": data, "count": len(data) if isinstance(data, list) else 0}
         return super().render(response, accepted_media_type, renderer_context)
 
 class BreadViewset(
@@ -34,6 +36,7 @@ class BreadViewset(
         if self.action == 'retrieve':
             return serializers.BreadDetailSerializer
         return serializers.BreadSerializer
+
 
 class ImageViewset( 
     mixins.ListModelMixin,
@@ -63,3 +66,8 @@ class ImageViewset(
 
         image.save()
         return Response(status=status.HTTP_201_CREATED, data={"id": image.id})
+
+    def retrieve(self, request, *args, **kwargs):
+        image = self.get_object()
+        response = FileResponse(image.file)
+        return response
