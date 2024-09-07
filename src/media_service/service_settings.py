@@ -35,8 +35,24 @@ class DogsConnectorSettings(BaseSettings):
     DOGS_API_URL: str
     DOGS_API_KEY: str
 
+class MinIOSettings(BaseSettings):
+    MINIO_DOMAIN: str = ''
+    MINIO_HOST: str
+    MINIO_PORT: int
+    MINIO_ACCESS_KEY: str
+    MINIO_SECRET_KEY: str
+    MINIO_API: str
+    MINIO_PATH: str
+    MINIO_BUCKET_NAME: str
+    AWS_S3_ENDPOINT_URL: str
+    MINIO_PUBLIC_DOMAIN: str
 
-class Settings(DogsConnectorSettings, DatabaseSettings, BaseSettings):
+    def get_minio_server_url(self) -> str:
+        if self.MINIO_DOMAIN:
+            return self.MINIO_DOMAIN
+        return f'{self.MINIO_HOST}:{self.MINIO_PORT}'
+
+class Settings(MinIOSettings, DogsConnectorSettings, DatabaseSettings, BaseSettings):
     DEBUG: bool = False
     ENVIRONMENT: str
     HOST: str
