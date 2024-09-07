@@ -71,3 +71,9 @@ class ImageViewset(
         image = self.get_object()
         response = FileResponse(image.file)
         return response
+
+    @action(detail=False, methods=['get'])
+    def random_images(self, request):
+        images = Image.objects.order_by('?')[:20]
+        serializer = self.get_serializer(images, many=True)
+        return Response(serializer.data)
