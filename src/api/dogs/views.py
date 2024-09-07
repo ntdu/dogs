@@ -2,13 +2,12 @@
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework import mixins, viewsets
+from rest_framework.parsers import MultiPartParser, JSONParser
+from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
+
 from src.api.dogs import serializers
 from src.core.models import Bread, Image
-from rest_framework.parsers import MultiPartParser, JSONParser
-
-from rest_framework.response import Response
-
-from rest_framework.renderers import JSONRenderer
 
 class CustomJSONRenderer(JSONRenderer):
     def render(self, data, accepted_media_type=None, renderer_context=None):
@@ -22,9 +21,19 @@ class BreadViewset(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet
 ):
-    queryset = Bread.objects.all()
     serializer_class = serializers.BreadSerializer
     renderer_classes = [CustomJSONRenderer]
+
+    def get_queryset(self):
+        queryset = Bread.objects.all()
+        if self.action == 'retrieve':
+            queryset = queryset.prefetch_related('images')
+        return queryset
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.BreadDetailSerializer
+        return serializers.BreadSerializer
 
 class ImageViewset( 
     mixins.ListModelMixin,
@@ -35,6 +44,7 @@ class ImageViewset(
     queryset = Image.objects.all()
     parser_classes = (JSONParser, MultiPartParser,)
     serializer_class = serializers.ImageSerializer
+    renderer_classes = [CustomJSONRenderer]
 
     # Issue with swagger to generate the upload file button. Use default django form instead
     # https://github.com/marcgibbons/django-rest-swagger/issues/647
