@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'debug_toolbar',
     'drf_yasg',
+    'django_filters',
 
     'src.core',
 ]
@@ -130,6 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     # your other DRF settings here
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 STORAGES = {

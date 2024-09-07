@@ -5,7 +5,7 @@ from rest_framework import mixins, viewsets
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
-# from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django.http import FileResponse
 
@@ -16,7 +16,7 @@ class CustomJSONRenderer(JSONRenderer):
     def render(self, data, accepted_media_type=None, renderer_context=None):
         status_code = renderer_context['response'].status_code
         renderer_context['response'].status_code = status.HTTP_200_OK
-        response = {"code": status_code, "data": data, "count": len(data) if isinstance(data, list) else 0}
+        response = {"code": status_code, "count": len(data) if isinstance(data, list) else 0, "data": data}
         return super().render(response, accepted_media_type, renderer_context)
 
 
@@ -28,10 +28,16 @@ class BreadViewset(
 ):
     serializer_class = serializers.BreadSerializer
     renderer_classes = [CustomJSONRenderer]
-    filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['name', 'description']
-    ordering_fields = ['id', 'name']
-    ordering = ['id']
+    filter_backends = (
+        DjangoFilterBackend,
+        SearchFilter,
+        OrderingFilter,
+    )
+
+    filterset_fields = ['name', 'description']
+    search_fields = ('name', 'description',)
+    ordering_fields = ('id', 'name',)
+    ordering = ('id',)
 
     def get_queryset(self):
         queryset = Bread.objects.all()
@@ -70,10 +76,16 @@ class ImageViewset(
     parser_classes = (JSONParser, MultiPartParser,)
     serializer_class = serializers.ImageSerializer
     renderer_classes = [CustomJSONRenderer]
-    filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['name', 'bread__name']
-    ordering_fields = ['id', 'name']
-    ordering = ['id']
+    filter_backends = (
+        DjangoFilterBackend,
+        SearchFilter,
+        OrderingFilter,
+    )
+
+    filterset_fields = ['name', 'description']
+    search_fields = ('name', 'bread__name',)
+    ordering_fields = ('id', 'name',)
+    ordering = ('id',)
 
     # Issue with swagger to generate the upload file button. Use default django form instead
     # https://github.com/marcgibbons/django-rest-swagger/issues/647
