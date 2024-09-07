@@ -1,0 +1,607 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/breads/:
+    get:
+      operationId: breads_list
+      tags:
+      - breads
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bread'
+          description: ''
+    post:
+      operationId: breads_create
+      tags:
+      - breads
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bread'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Bread'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Bread'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bread'
+          description: ''
+  /api/breads/{id}/:
+    get:
+      operationId: breads_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this bread.
+        required: true
+      tags:
+      - breads
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bread'
+          description: ''
+    put:
+      operationId: breads_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this bread.
+        required: true
+      tags:
+      - breads
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bread'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Bread'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Bread'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bread'
+          description: ''
+    patch:
+      operationId: breads_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this bread.
+        required: true
+      tags:
+      - breads
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBread'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBread'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBread'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bread'
+          description: ''
+    delete:
+      operationId: breads_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this bread.
+        required: true
+      tags:
+      - breads
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+components:
+  schemas:
+    Bread:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        weight: {}
+        external_id:
+          type: string
+          maxLength: 4
+        name:
+          type: string
+          maxLength: 30
+        vetstreet_url:
+          type: string
+          format: uri
+          maxLength: 100
+        temperament:
+          type: string
+          maxLength: 150
+        origin:
+          type: string
+          maxLength: 150
+        country_codes:
+          type: string
+          maxLength: 150
+        country_code:
+          type: string
+          maxLength: 150
+        description:
+          type: string
+        life_span:
+          type: string
+          maxLength: 150
+        indoor:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        alt_names:
+          type: string
+          nullable: true
+          maxLength: 150
+        adaptability:
+          type: integer
+          maximum: 5
+          minimum: 1
+        affection_level:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        child_friendly:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        dog_friendly:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        energy_level:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        grooming:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        health_issues:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        intelligence:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        shedding_level:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        social_needs:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        stranger_friendly:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        vocalisation:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        experimental:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        hairless:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        natural:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        rare:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        rex:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        suppressed_tail:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        short_legs:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        wikipedia_url:
+          type: string
+          format: uri
+          maxLength: 150
+        hypoallergenic:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        reference_image_id:
+          type: string
+          maxLength: 150
+      required:
+      - adaptability
+      - affection_level
+      - child_friendly
+      - country_code
+      - country_codes
+      - description
+      - dog_friendly
+      - energy_level
+      - experimental
+      - external_id
+      - grooming
+      - hairless
+      - health_issues
+      - hypoallergenic
+      - id
+      - indoor
+      - intelligence
+      - life_span
+      - name
+      - natural
+      - origin
+      - rare
+      - reference_image_id
+      - rex
+      - shedding_level
+      - short_legs
+      - social_needs
+      - stranger_friendly
+      - suppressed_tail
+      - temperament
+      - vetstreet_url
+      - vocalisation
+      - weight
+      - wikipedia_url
+    PatchedBread:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        weight: {}
+        external_id:
+          type: string
+          maxLength: 4
+        name:
+          type: string
+          maxLength: 30
+        vetstreet_url:
+          type: string
+          format: uri
+          maxLength: 100
+        temperament:
+          type: string
+          maxLength: 150
+        origin:
+          type: string
+          maxLength: 150
+        country_codes:
+          type: string
+          maxLength: 150
+        country_code:
+          type: string
+          maxLength: 150
+        description:
+          type: string
+        life_span:
+          type: string
+          maxLength: 150
+        indoor:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        alt_names:
+          type: string
+          nullable: true
+          maxLength: 150
+        adaptability:
+          type: integer
+          maximum: 5
+          minimum: 1
+        affection_level:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        child_friendly:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        dog_friendly:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        energy_level:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        grooming:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        health_issues:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        intelligence:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        shedding_level:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        social_needs:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        stranger_friendly:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        vocalisation:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        experimental:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        hairless:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        natural:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        rare:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        rex:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        suppressed_tail:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        short_legs:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        wikipedia_url:
+          type: string
+          format: uri
+          maxLength: 150
+        hypoallergenic:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        reference_image_id:
+          type: string
+          maxLength: 150
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

@@ -44,6 +44,7 @@ class Settings(DogsConnectorSettings, DatabaseSettings, BaseSettings):
 
     SECRET_KEY: str
     ALLOWED_HOSTS: list = []
+    INTERNAL_IPS: list = ["127.0.0.1"]
 
     class Config:
         env_file = Path(__file__).resolve().parent.parent.parent / "env/.env"
