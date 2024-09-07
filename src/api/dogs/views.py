@@ -17,6 +17,7 @@ class CustomJSONRenderer(JSONRenderer):
         response = {"code": status_code, "data": data, "count": len(data) if isinstance(data, list) else 0}
         return super().render(response, accepted_media_type, renderer_context)
 
+
 class BreadViewset(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
@@ -35,8 +36,23 @@ class BreadViewset(
     def get_serializer_class(self):
         if self.action == 'retrieve':
             return serializers.BreadDetailSerializer
+        elif self.action == 'attach_image':
+            return None
         return serializers.BreadSerializer
 
+    @action(detail=True, methods=['patch'], url_path='attach_image/(?P<image_id>[^/.]+)')
+    def attach_image(self, request, pk=None, image_id=None):
+        bread = self.get_object()
+        if not image_id:
+            return Response({"detail": "No image ID was provided."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            image = Image.objects.get(id=image_id)
+        except Image.DoesNotExist:
+            return Response({"detail": "Image not found."}, status=status.HTTP_404_NOT_FOUND)
+        image.bread = bread
+        image.save()
+        return Response(status=status.HTTP_200_OK)
 
 class ImageViewset( 
     mixins.ListModelMixin,
