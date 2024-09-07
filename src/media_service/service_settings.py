@@ -5,6 +5,7 @@ from typing import Dict, List, Optional, Tuple
 from pathlib import Path
 from pydantic_settings import BaseSettings
 
+
 class DatabaseSettings(BaseSettings):
     DB_MASTER_ENABLE: bool = True
     DB_MASTER_ENGINE: str
@@ -30,7 +31,12 @@ class DatabaseSettings(BaseSettings):
         }
 
 
-class Settings(DatabaseSettings, BaseSettings):
+class DogsConnectorSettings(BaseSettings):
+    DOGS_API_URL: str
+    DOGS_API_KEY: str
+
+
+class Settings(DogsConnectorSettings, DatabaseSettings, BaseSettings):
     DEBUG: bool = False
     ENVIRONMENT: str
     HOST: str
