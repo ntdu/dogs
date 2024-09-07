@@ -5,4 +5,3 @@ class BreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bread
         fields = '__all__'
-        # exclude = ('watchlist',)

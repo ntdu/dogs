@@ -1,5 +1,8 @@
+import uuid
+from os.path import splitext
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 # Create your models here.
 class Bread(models.Model):
@@ -39,4 +42,21 @@ class Bread(models.Model):
     reference_image_id = models.CharField(max_length=150)
 
     def __str__(self):
-        return self.external_id | self.name
+        return f"{self.external_id} | {self.name}"
+
+
+class Image(models.Model):
+    def upload_image_to(instance, filename):
+        _, extension = splitext(filename)    # noqa
+        return f'{uuid.uuid4().hex}{extension}'
+
+    bread = models.ForeignKey(Bread, on_delete=models.CASCADE, related_name="images")
+
+    url = models.URLField(max_length=500)
+    name = models.CharField(max_length=500, null=True, blank=True)
+    file = models.FileField(blank=True, null=True, upload_to=upload_image_to)
+    type = models.CharField(max_length=255, null=True, blank=True)
+    size = models.BigIntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.bread.name} | {self.url}"
