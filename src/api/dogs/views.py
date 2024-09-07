@@ -67,7 +67,8 @@ class ImageViewset(
         image.save()
         return Response(status=status.HTTP_201_CREATED, data={"id": image.id})
 
-    def retrieve(self, request, *args, **kwargs):
+    @action(detail=True, methods=['get'])
+    def display(self, request, pk=None):
         image = self.get_object()
         response = FileResponse(image.file)
         return response
