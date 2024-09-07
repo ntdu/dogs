@@ -3,7 +3,6 @@ from os.path import splitext
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-
 # Create your models here.
 class Bread(models.Model):
     weight = models.JSONField()
@@ -50,13 +49,16 @@ class Image(models.Model):
         _, extension = splitext(filename)    # noqa
         return f'{uuid.uuid4().hex}{extension}'
 
-    bread = models.ForeignKey(Bread, on_delete=models.CASCADE, related_name="images")
+    bread = models.ForeignKey(Bread,
+                              null=True,
+                              blank=True,
+                              on_delete=models.CASCADE,
+                              related_name="images")
 
-    url = models.URLField(max_length=500)
     name = models.CharField(max_length=500, null=True, blank=True)
     file = models.FileField(blank=True, null=True, upload_to=upload_image_to)
     type = models.CharField(max_length=255, null=True, blank=True)
     size = models.BigIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.bread.name} | {self.url}"
+        return f"{self.bread.name} | {self.name}"
