@@ -5,6 +5,8 @@ from rest_framework import mixins, viewsets
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
+# from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter, SearchFilter
 from django.http import FileResponse
 
 from src.api.dogs import serializers
@@ -26,6 +28,10 @@ class BreadViewset(
 ):
     serializer_class = serializers.BreadSerializer
     renderer_classes = [CustomJSONRenderer]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['name', 'description']
+    ordering_fields = ['id', 'name']
+    ordering = ['id']
 
     def get_queryset(self):
         queryset = Bread.objects.all()
@@ -64,6 +70,10 @@ class ImageViewset(
     parser_classes = (JSONParser, MultiPartParser,)
     serializer_class = serializers.ImageSerializer
     renderer_classes = [CustomJSONRenderer]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['name', 'bread__name']
+    ordering_fields = ['id', 'name']
+    ordering = ['id']
 
     # Issue with swagger to generate the upload file button. Use default django form instead
     # https://github.com/marcgibbons/django-rest-swagger/issues/647
