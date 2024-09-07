@@ -8,6 +8,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from src.api.dogs import serializers
+from src.api.dogs.filters import BreadFilter
 from src.core.models import Bread, Image
 
 
@@ -36,11 +37,7 @@ class BreadViewset(
         SearchFilter,
         OrderingFilter,
     )
-
-    filterset_fields = (
-        "name",
-        "description",
-    )
+    filterset_class = BreadFilter
     search_fields = (
         "name",
         "description",
@@ -64,9 +61,7 @@ class BreadViewset(
             return None
         return serializers.BreadSerializer
 
-    @action(
-        detail=True, methods=["patch"], url_path="attach_image/(?P<image_id>[^/.]+)"
-    )
+    @action(detail=True, methods=["patch"], url_path="attach_image/(?P<image_id>[^/.]+)")
     def attach_image(self, request, pk=None, image_id=None):
         bread = self.get_object()
         if not image_id:
@@ -78,9 +73,7 @@ class BreadViewset(
         try:
             image = Image.objects.get(id=image_id)
         except Image.DoesNotExist:
-            return Response(
-                {"detail": "Image not found."}, status=status.HTTP_404_NOT_FOUND
-            )
+            return Response({"detail": "Image not found."}, status=status.HTTP_404_NOT_FOUND)
         image.bread = bread
         image.save()
         return Response(status=status.HTTP_200_OK)
@@ -105,10 +98,7 @@ class ImageViewset(
         OrderingFilter,
     )
 
-    filterset_fields = (
-        "name",
-        "description",
-    )
+    filterset_fields = ("name",)
     search_fields = (
         "name",
         "bread__name",
