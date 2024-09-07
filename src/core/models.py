@@ -1,9 +1,10 @@
 import uuid
 from os.path import splitext
-from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 
-# Create your models here.
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+
+
 class Bread(models.Model):
     weight = models.JSONField()
     external_id = models.CharField(max_length=4)
@@ -17,7 +18,9 @@ class Bread(models.Model):
     life_span = models.CharField(max_length=150)
     indoor = models.IntegerField()
     alt_names = models.CharField(max_length=150, null=True)
-    adaptability = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    adaptability = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
     affection_level = models.IntegerField()
     child_friendly = models.IntegerField()
     dog_friendly = models.IntegerField()
@@ -46,14 +49,12 @@ class Bread(models.Model):
 
 class Image(models.Model):
     def upload_image_to(instance, filename):
-        _, extension = splitext(filename)    # noqa
-        return f'{uuid.uuid4().hex}{extension}'
+        _, extension = splitext(filename)
+        return f"{uuid.uuid4().hex}{extension}"
 
-    bread = models.ForeignKey(Bread,
-                              null=True,
-                              blank=True,
-                              on_delete=models.CASCADE,
-                              related_name="images")
+    bread = models.ForeignKey(
+        Bread, null=True, blank=True, on_delete=models.CASCADE, related_name="images"
+    )
 
     name = models.CharField(max_length=500, null=True, blank=True)
     file = models.FileField(blank=True, null=True, upload_to=upload_image_to)

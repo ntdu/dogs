@@ -20,6 +20,9 @@ boto3 = "^1.35.14"
 django-filter = "^24.3"
 
 
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.8.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

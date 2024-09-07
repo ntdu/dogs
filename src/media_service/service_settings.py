@@ -1,8 +1,6 @@
-
 import functools
-from typing import Dict, List, Optional, Tuple
-
 from pathlib import Path
+
 from pydantic_settings import BaseSettings
 
 
@@ -17,16 +15,16 @@ class DatabaseSettings(BaseSettings):
 
     def get_databases(self):
         return {
-            'default': {
-                'ENGINE': self.DB_MASTER_ENGINE,
-                'NAME': self.DB_MASTER_NAME,
-                'USER': self.DB_MASTER_USERNAME,
-                'PASSWORD': self.DB_MASTER_PASSWORD,
-                'HOST': self.DB_MASTER_HOST,
-                'PORT': self.DB_MASTER_PORT,
-                'ATOMIC_REQUESTS': True,
-                'CONN_MAX_AGE': 60,
-                'CONN_HEALTH_CHECKS': True
+            "default": {
+                "ENGINE": self.DB_MASTER_ENGINE,
+                "NAME": self.DB_MASTER_NAME,
+                "USER": self.DB_MASTER_USERNAME,
+                "PASSWORD": self.DB_MASTER_PASSWORD,
+                "HOST": self.DB_MASTER_HOST,
+                "PORT": self.DB_MASTER_PORT,
+                "ATOMIC_REQUESTS": True,
+                "CONN_MAX_AGE": 60,
+                "CONN_HEALTH_CHECKS": True,
             }
         }
 
@@ -35,8 +33,9 @@ class DogsConnectorSettings(BaseSettings):
     DOGS_API_URL: str
     DOGS_API_KEY: str
 
+
 class MinIOSettings(BaseSettings):
-    MINIO_DOMAIN: str = ''
+    MINIO_DOMAIN: str = ""
     MINIO_HOST: str
     MINIO_PORT: int
     MINIO_ACCESS_KEY: str
@@ -50,7 +49,8 @@ class MinIOSettings(BaseSettings):
     def get_minio_server_url(self) -> str:
         if self.MINIO_DOMAIN:
             return self.MINIO_DOMAIN
-        return f'{self.MINIO_HOST}:{self.MINIO_PORT}'
+        return f"{self.MINIO_HOST}:{self.MINIO_PORT}"
+
 
 class Settings(MinIOSettings, DogsConnectorSettings, DatabaseSettings, BaseSettings):
     DEBUG: bool = False
@@ -64,6 +64,7 @@ class Settings(MinIOSettings, DogsConnectorSettings, DatabaseSettings, BaseSetti
 
     class Config:
         env_file = Path(__file__).resolve().parent.parent.parent / "env/.env"
+
 
 @functools.lru_cache(maxsize=1)
 def get_settings() -> Settings:
