@@ -34,7 +34,7 @@ class BreadViewset(
         OrderingFilter,
     )
 
-    filterset_fields = ['name', 'description']
+    filterset_fields = ('name', 'description',)
     search_fields = ('name', 'description',)
     ordering_fields = ('id', 'name',)
     ordering = ('id',)
@@ -82,7 +82,7 @@ class ImageViewset(
         OrderingFilter,
     )
 
-    filterset_fields = ['name', 'description']
+    filterset_fields = ('name', 'description',)
     search_fields = ('name', 'bread__name',)
     ordering_fields = ('id', 'name',)
     ordering = ('id',)
