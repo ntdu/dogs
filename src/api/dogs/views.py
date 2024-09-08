@@ -9,6 +9,7 @@ from rest_framework.response import Response
 
 from src.api.dogs import serializers
 from src.api.dogs.filters import BreadFilter
+from src.api.dogs.tasks import sync_breads
 from src.core.models import Bread, Image
 
 
@@ -54,7 +55,10 @@ class BreadViewset(
     def get_serializer_class(self):
         if self.action == "retrieve":
             return serializers.BreadDetailSerializer
-        elif self.action == "attach_image":
+        elif self.action in (
+            "attach_image",
+            "sync_breads",
+        ):
             return None
         return serializers.BreadSerializer
 
@@ -74,6 +78,12 @@ class BreadViewset(
         image.bread = bread
         image.save()
         return Response(status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=["post"])
+    def sync_breads(self, request):
+        sync_breads.apply_async()
+
+        return Response({"message": "Started syncing breads."})
 
 
 class ImageViewset(

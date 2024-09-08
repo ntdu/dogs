@@ -7,12 +7,12 @@ from django.db import models
 class Bread(models.Model):
     weight = models.JSONField()
     height = models.JSONField()
-    external_id = models.CharField(max_length=4)
+    external_id = models.IntegerField()
     name = models.CharField(max_length=150)
-    bred_for = models.CharField(max_length=255)
-    breed_group = models.CharField(max_length=255)
-    life_span = models.CharField(max_length=255)
-    temperament = models.CharField(max_length=255)
+    bred_for = models.CharField(max_length=255, null=True, blank=True)
+    breed_group = models.CharField(max_length=255, null=True, blank=True)
+    life_span = models.CharField(max_length=255, null=True, blank=True)
+    temperament = models.CharField(max_length=255, null=True, blank=True)
     origin = models.CharField(max_length=255, null=True, blank=True)
     reference_image_id = models.CharField(max_length=255)
 
