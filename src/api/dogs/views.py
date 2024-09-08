@@ -77,7 +77,7 @@ class BreadViewset(
             return Response({"detail": "Image not found."}, status=status.HTTP_404_NOT_FOUND)
         image.bread = bread
         image.save()
-        return Response(status=status.HTTP_200_OK)
+        return Response({"message": "Success"})
 
     @action(detail=False, methods=["post"])
     def sync_breads(self, request):
