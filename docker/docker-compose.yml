@@ -13,5 +13,11 @@ services:
     volumes:
     - minio-data:/data
 
+  redis:
+    image: redis:7.0.11-alpine
+    ports:
+    - 6380:6380
+
+
 volumes:
   minio-data:

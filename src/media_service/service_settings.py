@@ -33,6 +33,19 @@ class DogsConnectorSettings(BaseSettings):
     DOGS_API_URL: str
     DOGS_API_KEY: str
 
+    @property
+    def breads_url(self):
+        return f"{self.DOGS_API_URL}/breeds"
+
+
+class CelerySettings(BaseSettings):
+    CELERY_BROKER_URL: str
+    CELERY_RESULT_BACKEND: str
+    CELERY_TASK_ACKS_LATE: bool = True
+    CELERY_TASK_DEFAULT_PRIORITY: int = 5
+    CELERY_WORKER_PREFETCH_MULTIPLIER: int = 1
+    CELERY_WORKER_CONCURRENCY: int = 1
+
 
 class MinIOSettings(BaseSettings):
     MINIO_DOMAIN: str = ""
@@ -52,7 +65,7 @@ class MinIOSettings(BaseSettings):
         return f"{self.MINIO_HOST}:{self.MINIO_PORT}"
 
 
-class Settings(MinIOSettings, DogsConnectorSettings, DatabaseSettings, BaseSettings):
+class Settings(CelerySettings, MinIOSettings, DogsConnectorSettings, DatabaseSettings, BaseSettings):
     DEBUG: bool = False
     ENVIRONMENT: str
     HOST: str
