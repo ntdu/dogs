@@ -13,7 +13,7 @@ class Bread(models.Model):
     breed_group = models.CharField(max_length=255)
     life_span = models.CharField(max_length=255)
     temperament = models.CharField(max_length=255)
-    origin = models.CharField(max_length=255)
+    origin = models.CharField(max_length=255, null=True, blank=True)
     reference_image_id = models.CharField(max_length=255)
 
     def __str__(self):
