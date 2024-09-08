@@ -23,6 +23,7 @@ def sync_breads():
 
     lastest_bread = Bread.objects.last()
     response = response.json()
+    # Filter out the breads that are already in the database
     if lastest_bread:
         lastest_bread_id = lastest_bread.external_id
         response.sort(key=lambda x: x["id"])

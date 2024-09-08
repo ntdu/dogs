@@ -1,0 +1,9 @@
+[run]
+omit =
+    */migrations/*
+    */tests/*
+    manage.py
+    src/media_service/wsgi.py
+    src/media_service/asgi.py
+    src/media_service/settings.py
+    src/media_service/service_settings.py

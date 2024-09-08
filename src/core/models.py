@@ -33,4 +33,4 @@ class Image(models.Model):
     size = models.BigIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.bread.name} | {self.name}"
+        return f"{self.id} | {self.name}"
