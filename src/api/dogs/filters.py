@@ -8,10 +8,7 @@ class BreadFilter(FilterSet):
 
     class Meta:
         model = Bread
-        fields = (
-            "name",
-            "description",
-        )
+        fields = ("name",)
 
     def filter_name(self, queryset, name, value):
         names = value.split(",")

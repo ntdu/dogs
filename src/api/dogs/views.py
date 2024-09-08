@@ -38,10 +38,7 @@ class BreadViewset(
         OrderingFilter,
     )
     filterset_class = BreadFilter
-    search_fields = (
-        "name",
-        "description",
-    )
+    search_fields = ("name",)
     ordering_fields = (
         "id",
         "name",
