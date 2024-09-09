@@ -1,7 +1,7 @@
 
 CMD_MAKEMIGRATIONS := python manage.py makemigrations
 CMD_MIGRATE := python manage.py migrate
-CMD_START_API := python manage.py runserver
+CMD_START_API := python manage.py runserver 0.0.0.0:8000
 
 makemigrations:
 	$(CMD_MAKEMIGRATIONS)

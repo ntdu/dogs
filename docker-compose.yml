@@ -4,8 +4,8 @@ services:
   minio:
     image: minio/minio:latest
     ports:
-    - 9003:9000
-    - 9002:9001
+    - 9000:9000
+    - 9001:9001
     environment:
       MINIO_ROOT_USER: minio
       MINIO_ROOT_PASSWORD: minio123
@@ -30,25 +30,29 @@ services:
 
   api:
     build: .
-    command: python manage.py runserver
-    # command: [ "make", "start-api" ]
+    command: [ "make", "start-api" ]
 
     ports:
-      - "8002:8000"
+      - "8000:8000"
 
     depends_on:
       - db
-      # - minio
+      - minio
 
     env_file:
-      - .env
+      - ./env/.env
 
-    # environment:
-    #   DB_USER: postgres
-    #   DB_PASSWORD: postgres
-    #   DB_NAME: uspos
-    #   DB_HOST: db
-    #   DB_PORT: 5433
+  worker1:
+    container_name: worker1
+    build: .
+    command: [ "make", "run-celery-worker" ]
+
+    depends_on:
+      - redis
+      - api
+
+    env_file:
+      - ./env/.env
 
 volumes:
   minio-data:
