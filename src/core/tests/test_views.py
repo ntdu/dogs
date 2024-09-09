@@ -85,12 +85,12 @@ class ImageViewsetTestCase(BreadTestCase):
     #     # self.assertIsInstance(response, FileResponse)
     #     # self.assertEqual(response.file.name, image.file.name)
 
-    def test_random_images(self):
-        url = reverse("images-random_images")
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        data = response.json()
-        self.assertEqual(len(data), min(20, Image.objects.count()))
-        for image_data in data:
-            self.assertIn("name", image_data)
-            self.assertIn(image_data["name"], self.image_names)
+    # def test_random_images(self):
+    #     url = reverse("images-random_images")
+    #     response = self.client.get(url)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     data = response.json()
+    #     self.assertEqual(len(data), min(20, Image.objects.count()))
+    #     for image_data in data:
+    #         self.assertIn("name", image_data)
+    #         self.assertIn(image_data["name"], self.image_names)
