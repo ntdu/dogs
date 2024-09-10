@@ -8,5 +8,5 @@ router.register("breads", views.BreadViewset, basename="breads")
 router.register("images", views.ImageViewset, basename="images")
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("v1/", include((router.urls, "api"), namespace="v1")),
 ]
