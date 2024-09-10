@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings
 
 class DatabaseSettings(BaseSettings):
     DB_MASTER_ENABLE: bool = True
-    DB_MASTER_ENGINE: str
+    DB_MASTER_ENGINE: str = "django.db.backends.postgresql"
     DB_MASTER_NAME: str
     DB_MASTER_USERNAME: str
     DB_MASTER_PASSWORD: str
@@ -57,7 +57,7 @@ class MinIOSettings(BaseSettings):
     MINIO_PATH: str
     MINIO_BUCKET_NAME: str
     AWS_S3_ENDPOINT_URL: str
-    MINIO_PUBLIC_DOMAIN: str
+    MINIO_PUBLIC_DOMAIN: str = ""
 
     def get_minio_server_url(self) -> str:
         if self.MINIO_DOMAIN:
@@ -68,8 +68,8 @@ class MinIOSettings(BaseSettings):
 class Settings(CelerySettings, MinIOSettings, DogsConnectorSettings, DatabaseSettings, BaseSettings):
     DEBUG: bool = False
     ENVIRONMENT: str
-    HOST: str
-    PORT: int
+    HOST: str = "localhost"
+    PORT: int = "8000"
 
     SECRET_KEY: str
     ALLOWED_HOSTS: list = []
