@@ -39,9 +39,6 @@ services:
       - db
       - minio
 
-    env_file:
-      - ./env/.env
-
   worker1:
     container_name: worker1
     build: .
@@ -50,9 +47,6 @@ services:
     depends_on:
       - redis
       - api
-
-    env_file:
-      - ./env/.env
 
 volumes:
   minio-data:
