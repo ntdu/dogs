@@ -17,7 +17,7 @@ start-api:
 run-celery-worker:
 	celery -A src.media_service worker -l INFO -Q tasks,dead_letter
 
-run-unittest:
+unit-test:
 	coverage run --source='.' manage.py test src
 	coverage report
 
