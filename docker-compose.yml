@@ -42,7 +42,7 @@ services:
       HOST: 0.0.0.0
       PORT: 80000
 
-      ENVIRONMENT: ${DB_MASTER_NAME}
+      ENVIRONMENT: ${ ENVIRONMENT }
       SECRET_KEY: ${ SECRET_KEY }
       DB_MASTER_NAME: uspos
       DB_MASTER_USERNAME: ${ DB_MASTER_USERNAME }
