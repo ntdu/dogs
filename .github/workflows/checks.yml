@@ -22,5 +22,28 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
       - name: Test
         env:  # Set environment variables using GitHub Secrets
+          ENVIRONMENT: stg
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DB_MASTER_NAME: ${{ secrets.DB_MASTER_NAME }}
+          DB_MASTER_USERNAME: ${{ secrets.DB_MASTER_USERNAME }}
+          DB_MASTER_PASSWORD: ${{ secrets.DB_MASTER_PASSWORD }}
+          DB_MASTER_HOST: ${{ secrets.DB_MASTER_HOST }}
+          DB_MASTER_PORT: ${{ secrets.DB_MASTER_PORT }}
+
+          DOGS_API_URL: ${{ secrets.DOGS_API_URL }}
+          DOGS_API_KEY: ${{ secrets.DOGS_API_KEY }}
+
+          MINIO_HOST: ${{ secrets.MINIO_HOST }}
+          MINIO_PORT: ${{ secrets.MINIO_PORT }}
+          MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
+          MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+          MINIO_API: ${{ secrets.MINIO_API }}
+          MINIO_PATH: ${{ secrets.MINIO_PATH }}
+          MINIO_BUCKET_NAME: ${{ secrets.MINIO_BUCKET_NAME }}
+          AWS_S3_ENDPOINT_URL: ${{ secrets.AWS_S3_ENDPOINT_URL }}
+          MINIO_PUBLIC_DOMAIN: ${{ secrets.MINIO_PUBLIC_DOMAIN }}
+
+          CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+          CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
+
         run: docker-compose run --rm api sh -c "python manage.py test"
