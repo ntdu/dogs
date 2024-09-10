@@ -76,7 +76,7 @@ class Settings(CelerySettings, MinIOSettings, DogsConnectorSettings, DatabaseSet
     INTERNAL_IPS: list = ["127.0.0.1"]
 
     class Config:
-        env_file = Path(__file__).resolve().parent.parent.parent / "env/.env"
+        env_file = Path(__file__).resolve().parent.parent.parent / ".env"
 
 
 @functools.lru_cache(maxsize=1)
