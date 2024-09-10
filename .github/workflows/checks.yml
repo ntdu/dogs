@@ -17,4 +17,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
-        run: docker-compose run --rm app sh -c "make run-unittest"
+        run: docker-compose run --rm app sh -c "python manage.py test"
