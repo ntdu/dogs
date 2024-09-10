@@ -23,7 +23,7 @@ jobs:
       - name: Test
         env:  # Set environment variables using GitHub Secrets
           ENVIRONMENT: stg
-          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
           DB_MASTER_NAME: uspos
           DB_MASTER_USERNAME: ${{ secrets.DB_MASTER_USERNAME }}
           DB_MASTER_PASSWORD: ${{ secrets.DB_MASTER_PASSWORD }}
