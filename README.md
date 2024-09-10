@@ -1,4 +1,4 @@
-# ️⚡️ Collecter service ⚡️
+# ️⚡️ Collector service ⚡️
 
 ## Project Description
 
