@@ -15,8 +15,10 @@ class CustomJSONRenderer(JSONRenderer):
         renderer_context["response"].status_code = status.HTTP_200_OK
         response = {
             "code": status_code,
-            "count": len(data) if isinstance(data, list) else 0,
-            "data": data,
+            # "count": len(data) if isinstance(data, list) else 0,
+            # "data": data,
+            "count": data.get("count", 0),
+            "data": data.get("results", data),
         }
         return super().render(response, accepted_media_type, renderer_context)
 
