@@ -12,7 +12,7 @@ from src.core.models import Bread, Image
 from src.utils.handler import CustomJSONRenderer
 
 
-@extend_schema(tags=["Breads"])
+@extend_schema(tags=["Images"])
 class ImageViewset(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
