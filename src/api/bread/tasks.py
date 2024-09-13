@@ -2,12 +2,11 @@ import logging
 
 from django.db import transaction
 
+from src.api.bread.serializers import BreadSerializer
 from src.core.models import Bread
 from src.media_service.celery_settings import app
 from src.media_service.service_settings import get_settings
 from src.utils.http import send_external_api_request
-
-from .serializers import BreadSerializer
 
 service_settings = get_settings()
 logger = logging.getLogger(__name__)

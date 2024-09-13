@@ -1,17 +1,18 @@
 from django.http import FileResponse
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.response import Response
 
+from src.api.image.serializers import ImageSerializer
 from src.core.models import Bread, Image
 from src.utils.handler import CustomJSONRenderer
 
-from .serializers import ImageSerializer
 
-
+@extend_schema(tags=["Breads"])
 class ImageViewset(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,

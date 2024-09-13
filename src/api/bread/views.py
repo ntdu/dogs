@@ -1,17 +1,18 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
 
+from src.api.bread.filters import BreadFilter
+from src.api.bread.serializers import BreadDetailSerializer, BreadSerializer
+from src.api.bread.tasks import sync_breads
 from src.core.models import Bread, Image
 from src.utils.handler import CustomJSONRenderer
 
-from .filters import BreadFilter
-from .serializers import BreadDetailSerializer, BreadSerializer
-from .tasks import sync_breads
 
-
+@extend_schema(tags=["Breads"])
 class BreadViewset(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
