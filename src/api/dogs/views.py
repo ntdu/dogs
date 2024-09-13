@@ -4,25 +4,13 @@ from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.parsers import JSONParser, MultiPartParser
-from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from src.api.dogs import serializers
 from src.api.dogs.filters import BreadFilter
 from src.api.dogs.tasks import sync_breads
 from src.core.models import Bread, Image
-
-
-class CustomJSONRenderer(JSONRenderer):
-    def render(self, data, accepted_media_type=None, renderer_context=None):
-        status_code = renderer_context["response"].status_code
-        renderer_context["response"].status_code = status.HTTP_200_OK
-        response = {
-            "code": status_code,
-            "count": len(data) if isinstance(data, list) else 0,
-            "data": data,
-        }
-        return super().render(response, accepted_media_type, renderer_context)
+from src.utils.handler import CustomJSONRenderer
 
 
 class BreadViewset(
@@ -81,6 +69,7 @@ class BreadViewset(
 
     @action(detail=False, methods=["post"])
     def sync_breads(self, request):
+        5 / 0
         sync_breads.apply_async()
 
         return Response({"message": "Started syncing breads."})

@@ -40,7 +40,7 @@ services:
       - minio
     environment:
       HOST: 0.0.0.0
-      PORT: 80000
+      PORT: 8000
 
       ENVIRONMENT: ${ENVIRONMENT}
       SECRET_KEY: ${SECRET_KEY}

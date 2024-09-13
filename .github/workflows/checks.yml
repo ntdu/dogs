@@ -46,5 +46,5 @@ jobs:
           CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
           CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
 
-        # run: docker-compose run --rm api sh -c "python manage.py test"
-        run: make unit-test
+        run: docker-compose run --rm api sh -c "python manage.py test"
+        # run: make unit-test
