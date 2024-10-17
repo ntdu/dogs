@@ -29,7 +29,7 @@ pre-commit = "^3.8.0"
 black = "^24.8.0"
 flake8 = "^7.1.1"
 coverage = "^7.6.1"
-pytest = "^8.3.2"
+pytest = "^8.3.3"
 respx = "^0.21.1"
 moto = {extras = ["all", "ec2", "s3"], version = "^5.0.14"}
 pytest-minio-mock = "^0.4.16"
